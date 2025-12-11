@@ -22,9 +22,7 @@
         <SCRIPT LANGUAGE = "JAVASCRIPT">
         function create()
         {
-            let a = name;
-            let b = description;
-            let c = price
+            {"name":name, "description":description, "price":price}
         }
     </BODY>
 </HTML>
