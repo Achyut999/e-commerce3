@@ -1,0 +1,30 @@
+<HTML>
+    <HEAD>
+        <TITLE>Test Input</TITLE>
+        <SCRIPT LANGUAGE="JavaScript">
+        function testResults (form) {
+            var TestVar = form.inputbox.value;
+            alert ("You typed: " + TestVar);
+        }
+        </SCRIPT>
+    </HEAD>
+    <BODY>
+          <FORM NAME="myform" ACTION="" METHOD="GET">Enter product name: <BR>
+            <INPUT TYPE="text" NAME="name" VALUE=""><P>
+        </FORM>
+        <FORM NAME="myform" ACTION="" METHOD="GET">Enter product description: <BR>
+            <INPUT TYPE="text" NAME="description" VALUE=""><P>
+        </FORM>
+        <FORM NAME="myform" ACTION="" METHOD="GET">Enter product price: <BR>
+            <INPUT TYPE="int" NAME="price" VALUE=""><P>
+        </FORM>
+        <button type="button" onclick = "create()">Create product</button>
+        <SCRIPT LANGUAGE = "JAVASCRIPT">
+        function create()
+        {
+            let a = name;
+            let b = description;
+            let c = price
+        }
+    </BODY>
+</HTML>
