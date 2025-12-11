@@ -1,7 +1,5 @@
 import sqlite3
 from datetime import date
-
-# Function to add a product (prompts for input)
 def add_product():
     name = input("Enter product name: ")
     price = float(input("Enter product price: "))
@@ -16,13 +14,9 @@ def add_product():
     conn.commit()
     conn.close()
     print(f"Product '{name}' added successfully.")
-
-# Function to place an order (updates product stock/sold and logs order)
 def place_order(product_id, quantity):
     conn = sqlite3.connect('seller_db.db')
     cursor = conn.cursor()
-    
-    # Check if enough stock
     cursor.execute('SELECT stock FROM Products WHERE id = ?', (product_id,))
     current_stock = cursor.fetchone()
     if current_stock is None or current_stock[0] < quantity:
@@ -30,7 +24,6 @@ def place_order(product_id, quantity):
         conn.close()
         return
     
-    # Update product
     cursor.execute('''
         UPDATE Products
         SET stock = stock - ?,
@@ -38,7 +31,6 @@ def place_order(product_id, quantity):
         WHERE id = ?
     ''', (quantity, quantity, product_id))
     
-    # Log order
     cursor.execute('''
         INSERT INTO Orders (product_id, quantity, order_date)
         VALUES (?, ?, ?)
@@ -48,6 +40,3 @@ def place_order(product_id, quantity):
     conn.close()
     print(f"Order placed for {quantity} units of product ID {product_id}.")
 
-# Example usage:
-# add_product()  # Run this to add a product via prompts
-# place_order(1, 5)  # Place an order for product ID 1, quantity 5
