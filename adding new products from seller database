@@ -1,7 +1,5 @@
 from flask import Flask,render_template, request, jsonify
 import sqlite3
-
-conn = sqlite3.connect("my_database.db")
 app = Flask(__name__,template_folder="templates")
 
 @app.route("/")
@@ -9,3 +7,4 @@ def hello():
     return render_template('seller.html')
 def process():
     data = request.get_json()
+conn = sqlite3.connect("prd.db")
