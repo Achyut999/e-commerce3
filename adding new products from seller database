@@ -1,42 +1,9 @@
-import sqlite3
-from datetime import date
-def add_product():
-    name = input("Enter product name: ")
-    price = float(input("Enter product price: "))
-    stock = int(input("Enter initial stock: "))
-    
-    conn = sqlite3.connect('seller_db.db')
-    cursor = conn.cursor()
-    cursor.execute('''
-        INSERT INTO Products (name, price, stock)
-        VALUES (?, ?, ?)
-    ''', (name, price, stock))
-    conn.commit()
-    conn.close()
-    print(f"Product '{name}' added successfully.")
-def place_order(product_id, quantity):
-    conn = sqlite3.connect('seller_db.db')
-    cursor = conn.cursor()
-    cursor.execute('SELECT stock FROM Products WHERE id = ?', (product_id,))
-    current_stock = cursor.fetchone()
-    if current_stock is None or current_stock[0] < quantity:
-        print("Insufficient stock or invalid product ID.")
-        conn.close()
-        return
-    
-    cursor.execute('''
-        UPDATE Products
-        SET stock = stock - ?,
-            sold = sold + ?
-        WHERE id = ?
-    ''', (quantity, quantity, product_id))
-    
-    cursor.execute('''
-        INSERT INTO Orders (product_id, quantity, order_date)
-        VALUES (?, ?, ?)
-    ''', (product_id, quantity, date.today()))
-    
-    conn.commit()
-    conn.close()
-    print(f"Order placed for {quantity} units of product ID {product_id}.")
+from flask import Flask,render_template, request, jsonify
 
+app = Flask(__name__,template_folder="templates")
+
+@app.route("/")
+def hello():
+    return render_template('index.html')
+def process():
+    data = request.get_json()
